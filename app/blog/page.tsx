@@ -5,50 +5,7 @@ import { CalendarDays, Clock, Plus } from "lucide-react"
 import Link from "next/link"
 
 // Mock blog posts data
-const blogPosts = [
-  {
-    id: 1,
-    title: "Building AI-Powered Healthcare Solutions: Lessons from SOAP Note Automation",
-    excerpt:
-      "How I'm using OpenAI's GPT-4o and Whisper APIs to automate medical documentation for solo practitioners, and the challenges of building for healthcare.",
-    date: "2024-01-15",
-    readTime: "8 min read",
-    tags: ["AI", "Healthcare", "OpenAI", "SaaS"],
-    published: true,
-  },
-  {
-    id: 2,
-    title: "From Arduino to AI: My Journey in Full-Stack Development",
-    excerpt:
-      "Reflecting on my path from hardware projects with Arduino to building scalable web applications with the MERN stack.",
-    date: "2024-01-10",
-    readTime: "6 min read",
-    tags: ["Full-Stack", "MERN", "Arduino", "Career"],
-    published: true,
-  },
-  {
-    id: 3,
-    title: "Building for Impact: Why Product Mindset Matters in Development",
-    excerpt:
-      "Thoughts on how focusing on real user problems and impact has shaped my approach to building software solutions.",
-    date: "2024-01-05",
-    readTime: "5 min read",
-    tags: ["Product", "UX", "Impact", "Development"],
-    published: true,
-  },
-  {
-    id: 4,
-    title: "Preparing for University of Waterloo: Computer Engineering Insights",
-    excerpt:
-      "What I'm learning and preparing for as an incoming Computer Engineering student, including Edge AI and RISC-V.",
-    date: "2024-01-01",
-    readTime: "7 min read",
-    tags: ["University", "Computer Engineering", "Edge AI", "RISC-V"],
-    published: true,
-  },
-
-]
-
+const blogPosts: any[] = []
 export default function BlogPage() {
   return (
     <div className="container mx-auto px-4 py-8">
@@ -91,7 +48,7 @@ export default function BlogPage() {
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {post.tags.map((tag) => (
+                  {post.tags.map((tag: string) => (
                     <Badge key={tag} variant="secondary">
                       {tag}
                     </Badge>
