@@ -17,7 +17,7 @@ export default async function ProjectsPage() {
   if (!token) throw new Error("Missing GITHUB_TOKEN in .env.local");
 
   // fetch latest 20 updated repos
-  const url = `https://api.github.com/users/${username}/repos?visibility=public&sort=updated&per_page=20`;
+  const url = `https://api.github.com/users/${username}/repos?visibility=public&sort=updated&per_page=300`;
   let res = await fetch(url, {
     headers: {
       Accept: "application/vnd.github.v3+json",
@@ -35,7 +35,6 @@ export default async function ProjectsPage() {
   }
 
   const data = await res.json();
-
   const projects: Repo[] = data.map((r: any) => ({
     id: r.id,
     name: r.name,
@@ -43,26 +42,59 @@ export default async function ProjectsPage() {
     html_url: r.html_url,
   }));
 
+  // add manual featured projects
+  const extraProjects: Repo[] = [
+    {
+      id: 100001,
+      name: "My Portfolio",
+      description: "Static portfolio site showcasing my skills and resume.",
+      html_url: "https://example.com/portfolio",
+    },
+    {
+      id: 100002,
+      name: "Design System",
+      description: "A reusable UI component library built with React and Tailwind.",
+      html_url: "https://github.com/Hthakkar23/design-system",
+    },
+    {
+      id: 100003,
+      name: "Chatbot API",
+      description: "Node.js service for conversational AI integrations.",
+      html_url: "https://github.com/Hthakkar23/chatbot-api",
+    },
+  ];
+
+  // combine featured with GitHub repos
+  const allProjects = [...extraProjects, ...projects];
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-6">Projects</h1>
-      <ul className="space-y-4">
-        {projects.map((proj) => (
+      <h1 className="text-4xl font-bold mb-8 text-center text-white">
+        Projects
+      </h1>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {allProjects.map((proj) => (
           <li
             key={proj.id}
-            className="border p-4 rounded hover:shadow-lg transition"
+            className="
+              rounded-lg p-6 transform transition
+              duration-300 ease-in-out
+              bg-gradient-to-br from-gray-800 to-gray-700
+              border border-gray-700
+              text-white
+              hover:from-gray-700 hover:to-gray-600
+              hover:border-gray-500 hover:shadow-xl
+            "
           >
             <Link
               href={proj.html_url}
               target="_blank"
-              className="text-2xl font-semibold text-primary hover:underline"
+              className="text-2xl font-semibold text-white hover:underline"
             >
               {proj.name}
             </Link>
             {proj.description && (
-              <p className="mt-2 text-muted-foreground">
-                {proj.description}
-              </p>
+              <p className="mt-2 text-gray-300">{proj.description}</p>
             )}
           </li>
         ))}

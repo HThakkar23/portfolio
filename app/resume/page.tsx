@@ -12,9 +12,9 @@ export default function ResumePage() {
 Harit Thakkar - Resume
 
 Contact Information:
-Email: your-email@gmail.com
+Email: thakkarharit02@gmail.com
 GitHub: github.com/HThakkar23
-LinkedIn: linkedin.com/in/harit-thakkar
+LinkedIn: https://www.linkedin.com/in/harit-thakkar-43a4b9279/
 Location: Canada
 
 Education:
@@ -64,7 +64,7 @@ Learning Focus:
             <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <Mail className="h-4 w-4" />
-                your-email@gmail.com
+                thakkarharit02@gmail.com
               </div>
               <div className="flex items-center gap-1">
                 <MapPin className="h-4 w-4" />
@@ -73,25 +73,27 @@ Learning Focus:
             </div>
             <div className="flex gap-4 mt-4">
               <Button variant="outline" size="sm" asChild>
-                <a href="https://linkedin.com/in/harit-thakkar" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/harit-thakkar-43a4b9279/" target="_blank" rel="noopener noreferrer">
                   <Linkedin className="mr-2 h-4 w-4" />
                   LinkedIn
                 </a>
               </Button>
               <Button variant="outline" size="sm" asChild>
-                <abbr title="GitHub">
-                  <a href="https://github.com/HThakkar23" target="_blank" rel="noopener noreferrer">
-                    <Github className="mr-2 h-4 w-4" />
-                    GitHub
-                  </a>
-                </abbr>
+                <a href="https://github.com/HThakkar23" target="_blank" rel="noopener noreferrer">
+                  <Github className="mr-2 h-4 w-4" />
+                  GitHub
+                </a>
               </Button>
             </div>
           </div>
-          <Button onClick={handleDownloadPDF} size="lg">
-            <Download className="mr-2 h-4 w-4" />
-            Download PDF
-          </Button>
+          <div className="text-center mt-8">
+            <Button asChild size="lg">
+              <a href='./SWE_Fast_Learner.pdf' download>
+                <Download className="mr-2 h-4 w-4" />
+                Download PDF
+              </a>
+            </Button>
+          </div>
         </div>
 
         <div className="space-y-8">
