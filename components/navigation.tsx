@@ -38,7 +38,9 @@ export function Navigation() {
                   href={item.href}
                   className={cn(
                     "flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary",
-                    pathname === item.href ? "text-primary" : "text-muted-foreground",
+                    pathname === item.href
+                      ? "text-primary"
+                      : "text-muted-foreground",
                   )}
                 >
                   <Icon className="h-4 w-4" />
@@ -50,13 +52,13 @@ export function Navigation() {
 
           {/* Mobile Navigation */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
-              <nav className="flex flex-col space-y-4 mt-8">
+            <div className="fixed inset-y-0 right-0 z-50 w-64 bg-background border-l shadow-lg transform transition-transform duration-300 ease-in-out md:hidden">
+              <nav className="flex flex-col space-y-4 mt-8 p-6">
                 {navigation.map((item) => {
                   const Icon = item.icon
                   return (
@@ -66,7 +68,9 @@ export function Navigation() {
                       onClick={() => setIsOpen(false)}
                       className={cn(
                         "flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary",
-                        pathname === item.href ? "text-primary" : "text-muted-foreground",
+                        pathname === item.href
+                          ? "text-primary"
+                          : "text-muted-foreground",
                       )}
                     >
                       <Icon className="h-4 w-4" />
@@ -75,7 +79,7 @@ export function Navigation() {
                   )
                 })}
               </nav>
-            </SheetContent>
+            </div>
           </Sheet>
         </div>
       </div>

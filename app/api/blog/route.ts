@@ -1,19 +1,17 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
+import { getPosts, addPost, removePost } from "@/lib/blog"
 
-// Mock blog posts database
-const blogPosts: any[] = []
+// Simple in-memory storage for demo purposes
+let blogPosts: any[] = []
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url)
-    const published = searchParams.get("published")
-    const tag = searchParams.get("tag")
+    const searchParams = request.nextUrl.searchParams
+    const tag = searchParams.get('tag')
 
-    let filteredPosts = blogPosts
-
-    if (published === "true") {
-      filteredPosts = filteredPosts.filter((post) => post.published)
-    }
+    let posts = getPosts()
+    let filteredPosts = posts
 
     if (tag) {
       filteredPosts = filteredPosts.filter((post: any) => post.tags.some((t: string) => t.toLowerCase().includes(tag.toLowerCase())))
@@ -28,7 +26,12 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { title, excerpt, content, tags, published = false } = body
+    const { title, excerpt, content, tags, published = false, secret } = body
+
+    // Check for authentication if secret is provided
+    if (secret && secret !== process.env.BLOG_SECRET) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+    }
 
     if (!title || !content) {
       return NextResponse.json({ error: "Title and content are required" }, { status: 400 })
@@ -52,8 +55,29 @@ export async function POST(request: NextRequest) {
 
     blogPosts.push(newPost)
 
+    // Also add to the lib if addPost function exists
+    if (typeof addPost === 'function') {
+      addPost({ title, excerpt, content, tags })
+    }
+
     return NextResponse.json({ success: true, post: newPost }, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: "Failed to create blog post" }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { id, secret } = await request.json()
+    if (secret !== process.env.BLOG_SECRET) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+    }
+    const ok = removePost(id)
+    if (!ok) {
+      return NextResponse.json({ message: "Not found" }, { status: 404 })
+    }
+    return NextResponse.json({ success: true })
+  } catch {
+    return NextResponse.json({ error: "Failed to delete post" }, { status: 500 })
   }
 }

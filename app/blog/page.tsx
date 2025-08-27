@@ -1,12 +1,14 @@
+import { getPosts } from "@/lib/blog"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CalendarDays, Clock, Plus } from "lucide-react"
 import Link from "next/link"
+import { DeletePostButton } from "@/components/DeletePostButton"
 
-// Mock blog posts data
-const blogPosts: any[] = []
 export default function BlogPage() {
+  const blogPosts = getPosts() // replace mock array
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
@@ -53,6 +55,9 @@ export default function BlogPage() {
                       {tag}
                     </Badge>
                   ))}
+                </div>
+                <div className="mt-2">
+                  <DeletePostButton id={post.id} />
                 </div>
               </CardHeader>
             </Card>
