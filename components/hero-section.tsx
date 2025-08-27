@@ -18,13 +18,6 @@ export function HeroSection() {
           {/* Profile Image with Glow Effect */}
           <div className="relative mb-8 inline-block">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-lg opacity-75 animate-pulse"></div>
-            <Image
-              src="/placeholder.svg?height=180&width=180"
-              alt="Harit Thakkar Profile Picture"
-              width={180}
-              height={180}
-              className="relative rounded-full border-4 border-white shadow-2xl"
-            />
           </div>
 
           {/* Main Heading with Gradient Text */}

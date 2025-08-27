@@ -25,7 +25,7 @@ export function ContactSection() {
               variant="secondary"
               className="bg-white text-gray-900 hover:bg-gray-100 shadow-lg"
             >
-              <Link href="mailto:your-email@gmail.com">
+              <Link href="mailto:thakkarharit02@gmail.com">
                 <Mail className="mr-2 h-5 w-5" />
                 Get In Touch
               </Link>
@@ -47,7 +47,7 @@ export function ContactSection() {
               variant="outline"
               className="border-white text-white hover:bg-white hover:text-gray-900 bg-transparent"
             >
-              <Link href="https://linkedin.com/in/harit-thakkar" target="_blank">
+              <Link href='https://www.linkedin.com/in/harit-thakkar-43a4b9279/' target="_blank">
                 <Linkedin className="mr-2 h-5 w-5" />
                 LinkedIn
               </Link>

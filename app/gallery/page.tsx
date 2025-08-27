@@ -1,155 +1,149 @@
 "use client"
 
-import { useState } from "react"
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
-const galleryItems = [
-  {
-    id: 1,
-    title: "E-commerce Dashboard",
-    category: "Web Development",
-    image: "/placeholder.svg?height=300&width=400",
-    description: "A modern dashboard for e-commerce analytics",
-  },
-  {
-    id: 2,
-    title: "Mobile App Design",
-    category: "UI/UX",
-    image: "/placeholder.svg?height=300&width=400",
-    description: "Clean and intuitive mobile application design",
-  },
-  {
-    id: 3,
-    title: "Data Visualization",
-    category: "Data Science",
-    image: "/placeholder.svg?height=300&width=400",
-    description: "Interactive charts and data visualization",
-  },
-  {
-    id: 4,
-    title: "Landing Page",
-    category: "Web Development",
-    image: "/placeholder.svg?height=300&width=400",
-    description: "Responsive landing page with modern design",
-  },
-  {
-    id: 5,
-    title: "API Documentation",
-    category: "Documentation",
-    image: "/placeholder.svg?height=300&width=400",
-    description: "Comprehensive API documentation portal",
-  },
-  {
-    id: 6,
-    title: "Code Editor Theme",
-    category: "Tools",
-    image: "/placeholder.svg?height=300&width=400",
-    description: "Custom dark theme for code editors",
-  },
-  {
-    id: 7,
-    title: "Portfolio Website",
-    category: "Web Development",
-    image: "/placeholder.svg?height=300&width=400",
-    description: "Personal portfolio with interactive elements",
-  },
-  {
-    id: 8,
-    title: "Conference Talk",
-    category: "Speaking",
-    image: "/placeholder.svg?height=300&width=400",
-    description: "Speaking at tech conference about React",
-  },
-]
-
-const categories = ["All", ...Array.from(new Set(galleryItems.map((item) => item.category)))]
+type GalleryItem = { filename: string; tags: string[] }
 
 export default function GalleryPage() {
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [selectedImage, setSelectedImage] = useState<(typeof galleryItems)[0] | null>(null)
+  const [tab, setTab] = useState<"view" | "upload">("view")
+  const [items, setItems] = useState<GalleryItem[]>([])
+  const [file, setFile] = useState<File | null>(null)
+  const [tags, setTags] = useState("")           // new
+  const [secret, setSecret] = useState("")       // shared for upload/delete
+  const [message, setMessage] = useState("")
 
-  const filteredItems =
-    selectedCategory === "All" ? galleryItems : galleryItems.filter((item) => item.category === selectedCategory)
+  useEffect(() => {
+    if (tab === "view") {
+      fetch("/api/gallery")
+        .then((res) => res.json())
+        .then((data) => setItems(data.images || []))
+    }
+  }, [tab])
+
+  async function onUpload(e: React.FormEvent) {
+    e.preventDefault()
+    if (!file) {
+      setMessage("Please select a file.")
+      return
+    }
+    const formData = new FormData()
+    formData.append("file", file)
+    formData.append("tags", tags)               // new
+    formData.append("secret", secret)
+
+    const res = await fetch("/api/gallery", { method: "POST", body: formData })
+    const data = await res.json()
+    if (res.ok) {
+      setMessage(`Uploaded: ${data.filename}`)
+      setFile(null)
+      setTags("")                              // reset tags
+      setSecret("")
+    } else {
+      setMessage(data.error || "Upload failed")
+    }
+  }
+
+  async function onDelete(filename: string) {
+    if (!secret) {
+      setMessage("Secret is required to delete")
+      return
+    }
+    const res = await fetch("/api/gallery", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ filename, secret }),
+    })
+    const data = await res.json()
+    if (res.ok) {
+      setMessage(`Deleted: ${filename}`)
+      setItems(items.filter((i) => i.filename !== filename))
+    } else {
+      setMessage(data.error || "Delete failed")
+    }
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">Gallery</h1>
-          <p className="text-muted-foreground text-lg">A visual showcase of my projects, designs, and experiences</p>
-        </div>
-
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          {categories.map((category) => (
-            <Badge
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              className="cursor-pointer px-4 py-2"
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category}
-            </Badge>
-          ))}
-        </div>
-
-        {/* Gallery Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredItems.map((item) => (
-            <Dialog key={item.id}>
-              <DialogTrigger asChild>
-                <Card className="cursor-pointer hover:shadow-lg transition-shadow overflow-hidden">
-                  <CardContent className="p-0">
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <Image
-                        src={item.image || "/placeholder.svg"}
-                        alt={item.title}
-                        fill
-                        className="object-cover hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300" />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                        <h3 className="text-white font-semibold">{item.title}</h3>
-                        <Badge variant="secondary" className="mt-1">
-                          {item.category}
-                        </Badge>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </DialogTrigger>
-              <DialogContent className="max-w-4xl">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="relative aspect-[4/3]">
-                    <Image
-                      src={item.image || "/placeholder.svg"}
-                      alt={item.title}
-                      fill
-                      className="object-cover rounded-lg"
-                    />
-                  </div>
-                  <div className="space-y-4">
-                    <div>
-                      <h2 className="text-2xl font-bold">{item.title}</h2>
-                      <Badge className="mt-2">{item.category}</Badge>
-                    </div>
-                    <p className="text-muted-foreground">{item.description}</p>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-          ))}
-        </div>
-
-        {filteredItems.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">No items found in this category.</p>
-          </div>
-        )}
+      <div className="flex gap-4 mb-6">
+        <Button onClick={() => setTab("view")} variant={tab === "view" ? "default" : "outline"}>
+          Gallery
+        </Button>
+        <Button onClick={() => setTab("upload")} variant={tab === "upload" ? "default" : "outline"}>
+          Upload
+        </Button>
       </div>
+
+      {tab === "view" ? (
+        <div>
+          <input
+            type="password"
+            placeholder="Admin Secret (required to delete)"
+            value={secret}
+            onChange={(e) => setSecret(e.target.value)}
+            className="w-full mb-4 border p-2"
+          />
+          {items.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {items.map((item) => (
+                <div key={item.filename} className="relative">
+                  <img
+                    src={`/gallery/${item.filename}`}
+                    alt={item.filename}
+                    className="w-full h-auto object-cover rounded"
+                  />
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {item.tags.map((t) => (
+                      <Badge key={t} variant="secondary">
+                        {t}
+                      </Badge>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => onDelete(item.filename)}
+                    className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 text-xs rounded"
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-muted-foreground">No images in the gallery.</p>
+          )}
+        </div>
+      ) : (
+        <form onSubmit={onUpload} className="space-y-4">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            required
+            aria-label="Select image file to upload"
+            className="w-full border p-2"
+          />
+          <input
+            type="text"
+            placeholder="Tags (comma separated)"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            className="w-full border p-2"
+          />
+          <input
+            type="password"
+            placeholder="Secret"
+            value={secret}
+            onChange={(e) => setSecret(e.target.value)}
+            className="w-full border p-2"
+            required
+          />
+          <Button type="submit">Upload Picture</Button>
+        </form>
+      )}
+
+      {message && <p className="mt-4">{message}</p>}
     </div>
   )
 }

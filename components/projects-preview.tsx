@@ -9,7 +9,6 @@ const featuredProjects = [
   {
     title: "AI Healthcare SaaS",
     description: "Automating SOAP notes, billing, and summaries for solo practitioners using OpenAI APIs.",
-    image: "/placeholder.svg?height=300&width=500",
     tags: ["AI", "Healthcare", "OpenAI", "Node.js", "React"],
     github: "#",
     demo: "#",
@@ -18,7 +17,6 @@ const featuredProjects = [
   {
     title: "Study Planner",
     description: "Productivity tool with Pomodoro Timer, Task Manager, and insights for students.",
-    image: "/placeholder.svg?height=300&width=500",
     tags: ["React", "Node.js", "MongoDB", "Productivity"],
     github: "#",
     demo: "#",
@@ -27,7 +25,6 @@ const featuredProjects = [
   {
     title: "MERN Stack Projects",
     description: "Full-stack web applications built with React, Node.js, MongoDB, and Express.",
-    image: "/placeholder.svg?height=300&width=500",
     tags: ["MERN", "Full-Stack", "API", "Database"],
     github: "#",
     demo: "#",
@@ -54,13 +51,6 @@ export function ProjectsPreview() {
                 className="group border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700"
               >
                 <div className="relative overflow-hidden">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    width={500}
-                    height={300}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
                   <div className="absolute top-4 right-4">
                     <Badge
                       variant={project.status === "Completed" ? "default" : "secondary"}

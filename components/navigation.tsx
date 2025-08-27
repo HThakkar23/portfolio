@@ -14,6 +14,7 @@ const navigation = [
   { name: "Projects", href: "/projects", icon: Code },
   { name: "Gallery", href: "/gallery", icon: ImageIcon },
   { name: "Resume", href: "/resume", icon: User },
+  { name: "AI", href: "/ai", icon: Code }, // new
 ]
 
 export function Navigation() {
@@ -57,28 +58,35 @@ export function Navigation() {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <div className="fixed inset-y-0 right-0 z-50 w-64 bg-background border-l shadow-lg transform transition-transform duration-300 ease-in-out md:hidden">
-              <nav className="flex flex-col space-y-4 mt-8 p-6">
-                {navigation.map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className={cn(
-                        "flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary",
-                        pathname === item.href
-                          ? "text-primary"
-                          : "text-muted-foreground",
-                      )}
-                    >
-                      <Icon className="h-4 w-4" />
-                      {item.name}
-                    </Link>
-                  )
-                })}
-              </nav>
+            <div className="fixed inset-y-0 left-0 z-50 w-80 bg-background border-r shadow-lg transform transition-transform duration-300 ease-in-out md:hidden">
+              <div className="flex flex-col h-full p-6">
+                <div className="mb-8">
+                  <Link href="/" className="font-bold text-2xl">
+                    HT
+                  </Link>
+                </div>
+                <nav className="flex flex-col space-y-6">
+                  {navigation.map((item) => {
+                    const Icon = item.icon
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className={cn(
+                          "flex items-center gap-3 text-base font-medium transition-colors hover:text-primary p-2 rounded-md",
+                          pathname === item.href
+                            ? "text-primary bg-primary/10"
+                            : "text-muted-foreground hover:bg-muted",
+                        )}
+                      >
+                        <Icon className="h-5 w-5" />
+                        {item.name}
+                      </Link>
+                    )
+                  })}
+                </nav>
+              </div>
             </div>
           </Sheet>
         </div>
