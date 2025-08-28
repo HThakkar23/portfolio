@@ -5,6 +5,7 @@ import "../styles/globals.css"
 import { Navigation } from "@/components/navigation"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Chatbot } from "@/components/Chatbot"
+import { AnimatedBubbles } from "@/components/AnimatedBubbles"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -30,6 +31,7 @@ export default function RootLayout({
           disableTransitionOnChange
           themes={["light", "dark", "fun"]}
         >
+          <AnimatedBubbles /> {/* floating bubbles background */}
           <Navigation />
           <main>{children}</main>
           <Chatbot />

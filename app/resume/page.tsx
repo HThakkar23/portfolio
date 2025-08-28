@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Download, Mail, MapPin, Linkedin, Github } from "lucide-react"
+import { ExperienceSection } from "@/components/experience-section"
 
 export default function ResumePage() {
   const handleDownloadPDF = () => {
@@ -261,7 +262,9 @@ Learning Focus:
               </div>
             </CardContent>
           </Card>
+
         </div>
+        <ExperienceSection />
       </div>
     </div>
   )

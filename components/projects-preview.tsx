@@ -24,18 +24,25 @@ export default async function ProjectsPreview() {
   }
 
   return (
-    <section className="py-20">
+    <section className="py-20 animate-fade-in-up"> {/* added fade-in */}
       <h2 className="text-3xl font-bold mb-6 text-center">Recent Work</h2>
       {repos.length === 0 ? (
         <p className="text-center text-muted-foreground">No projects found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {repos.map((repo) => (
-            <Card key={repo.id} className="hover:shadow-lg transition-shadow">
+            <Card
+              key={repo.id}
+              className="hover:shadow-lg transition-shadow animate-fade-in-up" /* fade-in each card */
+            >
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>
-                    <Link href={repo.html_url} target="_blank">
+                    <Link
+                      href={repo.html_url}
+                      target="_blank"
+                      className="animate-bounce-hover" /* add bounce on hover */
+                    >
                       {repo.name}
                     </Link>
                   </CardTitle>

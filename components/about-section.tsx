@@ -3,7 +3,7 @@ import { Code, Brain, Zap } from "lucide-react"
 
 export function AboutSection() {
   return (
-    <section className="py-20 bg-white dark:bg-gray-900">
+    <section className="py-20 animate-fade-in-up bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -14,10 +14,12 @@ export function AboutSection() {
               <Card className="border-0 shadow-2xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700">
                 <CardHeader className="p-8">
                   <CardDescription className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-                    I'm a <span className="font-semibold text-blue-600 dark:text-blue-400">builder at heart</span> — I
-                    create scalable solutions for real-world problems. From helping underserved students learn better to
+                    I'm a{" "}
+                    <span className="font-semibold text-blue-600 dark:text-blue-400">builder at heart</span> — I create
+                    scalable solutions for real-world problems. From helping underserved students learn better to
                     automating admin work for doctors, I'm driven by{" "}
-                    <span className="font-semibold text-purple-600 dark:text-purple-400">impact, not just code</span>.
+                    <span className="font-semibold text-purple-600 dark:text-purple-400">impact, not just code</span>
+                    .
                   </CardDescription>
                 </CardHeader>
               </Card>

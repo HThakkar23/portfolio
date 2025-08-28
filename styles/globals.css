@@ -96,3 +96,102 @@ html.fun body {
   filter: hue-rotate(45deg) saturate(180%);
   transition: filter 0.3s ease;
 }
+
+/* Bubble container */
+.animated-bubbles {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -10;
+}
+
+/* Bubble element */
+.bubble {
+  position: absolute;
+  bottom: -50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: rise 20s infinite ease-in, drift 6s infinite ease-in-out;
+}
+
+/* Rise up and fade */
+@keyframes rise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-120vh) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Gentle horizontal drift */
+@keyframes drift {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(20px);
+  }
+}
+
+/* Subtle wind‐like gradient sweep */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), transparent 70%);
+  animation: wind 5s infinite linear;
+  pointer-events: none;
+  z-index: -20;
+}
+
+@keyframes wind {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
+/* Fade in from below */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+/* Button bounce on hover */
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce-hover:hover {
+  animation: bounce 0.6s ease infinite;
+}
