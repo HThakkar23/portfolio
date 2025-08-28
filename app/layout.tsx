@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import "../styles/globals.css"
 import { Navigation } from "@/components/navigation"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Chatbot } from "@/components/Chatbot"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,9 +23,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          themes={["light", "dark", "fun"]}
+        >
           <Navigation />
           <main>{children}</main>
+          <Chatbot />
         </ThemeProvider>
       </body>
     </html>

@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
       headers: {
         Accept: "application/vnd.github.v3+json",
         // Add GitHub token if needed for higher rate limits
-        // 'Authorization': `token ${process.env.GITHUB_TOKEN}`
+        'Authorization': `token ${process.env.GITHUB_TOKEN}`
       },
       next: { revalidate: 3600 }, // Cache for 1 hour
     })

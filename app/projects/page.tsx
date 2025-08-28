@@ -43,29 +43,10 @@ export default async function ProjectsPage() {
   }));
 
   // add manual featured projects
-  const extraProjects: Repo[] = [
-    {
-      id: 100001,
-      name: "My Portfolio",
-      description: "Static portfolio site showcasing my skills and resume.",
-      html_url: "https://example.com/portfolio",
-    },
-    {
-      id: 100002,
-      name: "Design System",
-      description: "A reusable UI component library built with React and Tailwind.",
-      html_url: "https://github.com/Hthakkar23/design-system",
-    },
-    {
-      id: 100003,
-      name: "Chatbot API",
-      description: "Node.js service for conversational AI integrations.",
-      html_url: "https://github.com/Hthakkar23/chatbot-api",
-    },
-  ];
+
 
   // combine featured with GitHub repos
-  const allProjects = [...extraProjects, ...projects];
+  const allProjects = [...projects];
 
   return (
     <div className="container mx-auto px-4 py-8">
