@@ -89,7 +89,7 @@ Learning Focus:
           </div>
           <div className="text-center mt-8">
             <Button asChild size="lg">
-              <a href='./SWE_Fast_Learner.pdf' download>
+              <a href='./Harit Thakkar Resume_ Fall 2025.pdf' download>
                 <Download className="mr-2 h-4 w-4" />
                 Download PDF
               </a>
@@ -265,6 +265,33 @@ Learning Focus:
 
         </div>
         <ExperienceSection />
+      </div>
+
+      {/* Embed PDF */}
+      <div className="mt-8 mx-auto max-w-4xl border shadow h-[80vh]">
+        <object
+          data="/Harit Thakkar Resume_ Fall 2025.pdf"
+          type="application/pdf"
+          width="100%"
+          height="100%"
+        >
+          <p className="p-4 text-center">
+            Your browser doesn’t support embedded PDFs.
+            <a href="/Harit Thakkar Resume_ Fall 2025.pdf" download className="underline ml-2">
+              Download the PDF
+            </a>
+          </p>
+        </object>
+      </div>
+
+      {/* Download button */}
+      <div className="text-center my-8">
+        <Button asChild size="lg">
+          <a href="/Harit Thakkar Resume_ Fall 2025.pdf" download className="inline-flex items-center">
+            <Download className="mr-2 h-4 w-4" />
+            Download Resume
+          </a>
+        </Button>
       </div>
     </div>
   )
